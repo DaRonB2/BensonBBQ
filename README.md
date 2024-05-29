@@ -6,5 +6,5 @@ The next thing for you to do will be to now click on our order button to place t
 Now lets find a nice show or video to watch while we get ready to eat because finally look on your site for the order ready status. Once it reads ready, come and grab your food and we hope you enjoy every last bit of it.
 
 
-[WIREFRAME](https://github.com/DaRonB2/Unit-2-project-2/assets/160679308/ce8926a9-1608-4614-827a-5350a84bf125)
+[WIREFRAME AND ERD](https://github.com/DaRonB2/Unit-2-project-2/assets/160679308/ce8926a9-1608-4614-827a-5350a84bf125)
 
