@@ -37,7 +37,7 @@ app.get('/menu', (req, res) => {
 });
 
 app.get('/menu/meats', (req,res) => {
-    res.render('menu/meat', {});
+    res.render('menu/meat', {allMeats: meats});
 });
 
 app.get('/menu/drinks', (req,res) => {

@@ -9,8 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <title>Pokemon App</title>
-    <link rel="stylesheet" href="/css/index.css" />
+    <title>Benson BBQ Menu</title>
+    <link rel="stylesheet" href="/css/meats.css" />
   </head>
   <body>
     <header>
@@ -42,15 +42,15 @@
 
     <div class="carousel">
       <div class="list">
-        <% for( let i = 0; i < pokemonArray.length; i++ ) { %>
-          <% let poke = pokemonArray[i] %>
+        <% for( let i = 0; i < allMeats.length; i++ ) { %>
+          <% let meat = allMeats[i] %>
 
           <div class="item">
-            <img src="<%= poke.image %>" alt="" />
+            <img src="<%= meat.image %>" alt="" />
             <div class="content">
-              <div class="author"><%= poke.type %></div>
-              <div class="title"><%= poke.name %></div>
-              <div class="topic"><%= poke.move %></div>
+              <div class="author"><%= meat.type %></div>
+              <div class="title"><%= meat.name %></div>
+              <div class="topic"><%= meat.price %></div>
               <div class="des">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut ipsam
                   saepe accusantium soluta quibusdam error. Tempore officia hic
@@ -68,16 +68,16 @@
       </div>
 
       <div class="thumbnail">
-        <% for( let i = 0; i < pokemonArray.length; i++ ) { %>
-          <% let poke = pokemonArray[i] %>
+        <% for( let i = 0; i < allMeats.length; i++ ) { %>
+          <% let meat = allMeats[i] %>
         <div class="item">
-          <img src="<%= poke.image %>" alt="">
+          <img src="<%= meat.image %>" alt="">
           <div class="content">
             <div class="title">
-              <%= poke.name %>
+              <%= meat.name %>
             </div>
             <div class="des">
-              <%= poke.type %>
+              <%= meat.price %>
             </div>
           </div>
         </div>
