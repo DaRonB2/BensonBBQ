@@ -5,7 +5,12 @@ const methodOverride = require('method-override');
 const axios = require('axios'); // access data from an api
 const dotenv = require('dotenv'); // remember: this is managing environment variables
 dotenv.config();
-
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/BensonBBQ');
+// ------------ DATA -----------------
+const meat = require('./models/meats'); 
+const side = require('./models/sides');
+const drink = require('./models/drinks');
 
 // ------------ MIDDLEWARE ------------
 app.use(methodOverride('_method'));
@@ -16,14 +21,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // --------- DATA ----------
 // ------------- DATA ---------
-const {meats} = require("./models/meats");
-const {sides} = require("./models/sides");
-const {drinks} = require("./models/drinks");
+// const {meats} = require("./models/meats");
+// const {sides} = require("./models/sides");
+// const {drinks} = require("./models/drinks");
 
-console.log(drinks);
-console.log(meats);
-
-
+// console.log(drinks);
+// console.log(meats);
 
 // -------- GET ROUTES -------------
 // -------- HOME ----------
@@ -36,16 +39,32 @@ app.get('/menu', (req, res) => {
     res.render('menu/index', {});
 });
 
-app.get('/menu/meats', (req,res) => {
-    res.render('menu/meat', {allMeats: meats});
+
+app.get('/menu/meats', async (req, res) => {
+    try {
+        const allMeats = await meat.find(); // Fetch all meats from MongoDB
+        res.render('menu/meat', { allMeats });
+    } catch (error) {
+        res.status(404).send('<h1>404! Page Not Found.</h1>');
+    }
 });
 
-app.get('/menu/drinks', (req,res) => {
-    res.render('menu/drinks', {});
+app.get('/menu/sides', async (req, res) => {
+    try {
+        const allSides = await side.find(); // Fetch all meats from MongoDB
+        res.render('menu/sides', { allSides });
+    } catch (error) {
+        res.status(404).send('<h1>404! Page Not Found.</h1>');
+    }
 });
 
-app.get('/menu/sides', (req,res) => {
-    res.render('menu/sides', {});
+app.get('/menu/drinks', async (req, res) => {
+    try {
+        const allDrinks = await drink.find(); // Fetch all meats from MongoDB
+        res.render('menu/drinks', { allDrinks });
+    } catch (error) {
+        res.status(404).send('<h1>404! Page Not Found.</h1>');
+    }
 });
 
 // ------- ORDER ---------
