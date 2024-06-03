@@ -79,8 +79,11 @@ app.get('/order', async (req, res) => {
 });
 
 //------- STATUS ----------
-app.get('/status', (req, res) => {
-    res.render('status/index', {});
+app.get('/status', async (req, res) => {
+    const allMeats = await meat.find();
+    const allSides = await side.find();
+    const allDrinks = await drink.find();
+    res.render('status/index', {allDrinks, allSides, allMeats});
 });
 
 // ------- CHECKOUT ----------

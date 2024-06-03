@@ -12,8 +12,7 @@ a {
 }
 
 header {
-    width: 1140px;
-    max-width: 80%;
+    width: 100%;
     margin: auto;
     height: 50px;
     display: flex;
@@ -21,6 +20,11 @@ header {
     position: relative;
     z-index: 100;
 }
+
+/* header nav {
+    width: 100%;
+    left: 0;
+} */
 
 header a {
     color: #eee;
@@ -46,8 +50,8 @@ header a {
 .carousel .list .item img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    background-color: #8338ec;
+    /* object-fit: contain; */
+    background-color: #000;
 }
 
 .carousel .list .item .content {
@@ -76,7 +80,11 @@ header a {
 }
 
 .carousel .list .item .topic {
-    color: #f1683a;
+    color: crimson;
+    border: 3px white solid;
+    border-radius: 1rem;
+    width: 180px;
+    background: black;
 }
 
 .carousel .list .item .buttons {
@@ -267,7 +275,7 @@ header a {
     z-index: 1000;
     width: 0%;
     height: 3px;
-    background-color: #f1683a;
+    background-color: crimson;
     left: 0;
     top: 0;
 }
