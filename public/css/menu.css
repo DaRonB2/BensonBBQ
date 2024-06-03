@@ -1,0 +1,29 @@
+body {
+    background: black;
+
+}
+.meat-img, .side-img, .drink-img {
+    padding: 10px;
+    margin: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+img {
+    width: 400px;
+    height: 400px;
+    margin: 3rem;
+    padding: 1rem;
+    border: 5px white solid;
+    border-radius: 200px;
+
+}

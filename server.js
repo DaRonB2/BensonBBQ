@@ -35,8 +35,11 @@ app.get('/', (req, res) => {
 });
 
 // ------ MENU -----------
-app.get('/menu', (req, res) => {
-    res.render('menu/index', {});
+app.get('/menu', async (req, res) => {
+    const allMeats = await meat.find();
+    const allSides = await side.find();
+    const allDrinks = await drink.find();
+    res.render('menu/index', {allDrinks, allSides, allMeats});
 });
 
 
@@ -68,8 +71,11 @@ app.get('/menu/drinks', async (req, res) => {
 });
 
 // ------- ORDER ---------
-app.get('/order', (req, res) => {
-    res.render('order/index', {});
+app.get('/order', async (req, res) => {
+    const allMeats = await meat.find();
+    const allSides = await side.find();
+    const allDrinks = await drink.find();
+    res.render('order/index', {allDrinks, allSides, allMeats});
 });
 
 //------- STATUS ----------

@@ -22,7 +22,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Navbar</a>
+              <a class="navbar-brand" href="#">Benson's</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -45,19 +45,30 @@
             </div>
           </nav>
     </header>
+     <% const meat1 = allMeats[0]; %>
+     <% const meat2 = allMeats[1]; %>
+     <% const meat3 = allMeats[2]; %>
+     <% const side1 = allSides[0]; %>
+     <% const side2 = allSides[1]; %>
+     <% const side3 = allSides[2]; %>
+     <% const drink1 = allDrinks[0]; %>
+     <% const drink2 = allDrinks[1]; %>
+     <% const drink3 = allDrinks[2]; %>
+        <%= //console.log(meat1, meat2, meat3, side1, side2, side3, drink1, drink2, drink3); %>
     <div class="accordion" id="accordionExample">
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            Brisket
+            <%= meat1.name %>
           </button>
         </h2>
+       
         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <strong>Smoked for 12 hours fresh every day. This order comes with 7 juicy, tender, and thick brisjet slices!</strong>
           </div>
           <div class="accordion-body">
-            <strong class="price">$33.19</strong>
+            <strong class="price">$<%= meat1.price %></strong>
           </div>
           <div class="accordion-body">
             <button class="checkout">Checkout</button>
@@ -67,7 +78,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            Ribs
+            <%= meat2.name %>
           </button>
         </h2>
         <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -75,7 +86,7 @@
             <strong>This is the third item's accordion body.</strong>
           </div>
           <div class="accordion-body">
-            <strong class="price">$27.36</strong>
+            <strong class="price">$<%= meat2.price %></strong>
           </div>
           <div class="accordion-body">
             <button class="checkout">Checkout</button>
@@ -85,7 +96,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            Tri Tip
+            <%= meat3.name %>
           </button>
         </h2>
         <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -93,7 +104,7 @@
             <strong>This is the third item's accordion body.</strong>
           </div>
           <div class="accordion-body">
-            <strong class="price">$19.55</strong>
+            <strong class="price">$<%= meat3.price %></strong>
           </div>
           <div class="accordion-body">
             <button class="checkout">Checkout</button>
@@ -103,7 +114,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-            Mac N Cheese
+            <%= side1.name %>
           </button>
         </h2>
         <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -111,7 +122,7 @@
             <strong>This is the third item's accordion body.</strong>
           </div>
           <div class="accordion-body">
-            <strong class="price">$19.55</strong>
+            <strong class="price">$<%= side1.price %></strong>
           </div>
           <div class="accordion-body">
             <button class="checkout">Checkout</button>
@@ -121,7 +132,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-            Candy Yams
+            <%= side2.name %>
           </button>
         </h2>
         <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -129,7 +140,7 @@
             <strong>This is the third item's accordion body.</strong>
           </div>
           <div class="accordion-body">
-            <strong class="price">$19.55</strong>
+            <strong class="price">$<%= side2.price %></strong>
           </div>
           <div class="accordion-body">
             <button class="checkout">Checkout</button>
@@ -139,7 +150,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-            Collard Greens
+            <%= side3.name %>
           </button>
         </h2>
         <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -147,7 +158,7 @@
             <strong>This is the third item's accordion body.</strong>
           </div>
           <div class="accordion-body">
-            <strong class="price">$19.55</strong>
+            <strong class="price">$<%= side3.price %></strong>
           </div>
           <div class="accordion-body">
             <button class="checkout">Checkout</button>
@@ -157,7 +168,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-            Soda
+            <%= drink1.name %>
           </button>
         </h2>
         <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -165,7 +176,7 @@
             <strong>This is the third item's accordion body.</strong>
           </div>
           <div class="accordion-body">
-            <strong class="price">$19.55</strong>
+            <strong class="price">$<%= drink1.price %></strong>
           </div>
           <div class="accordion-body">
             <button class="checkout">Checkout</button>
@@ -175,7 +186,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-            Juice
+            <%= drink2.name %>
           </button>
         </h2>
         <div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -183,7 +194,7 @@
             <strong>This is the third item's accordion body.</strong>
           </div>
           <div class="accordion-body">
-            <strong class="price">$19.55</strong>
+            <strong class="price">$<%= drink2.price %></strong>
           </div>
           <div class="accordion-body">
             <button class="checkout">Checkout</button>
@@ -193,7 +204,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
-            Water
+            <%= drink3.name %>
           </button>
         </h2>
         <div id="collapseNine" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -201,7 +212,7 @@
             <strong>This is the third item's accordion body.</strong>
           </div>
           <div class="accordion-body">
-            <strong class="price">$19.55</strong>
+            <strong class="price">$<%= drink3.price %></strong>
           </div>
           <div class="accordion-body">
             <button class="checkout">Checkout</button>
