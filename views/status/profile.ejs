@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,29 +9,29 @@
 </head>
 <body>
 
-    <% //if (alerts.success) { %>
-      <% //alerts.success.forEach(msg => { %>
-        <div class="alert alert-success"><%= //msg %></div>
-      <% //}) %>
-    <% //} %>
+    <% if (alerts.success) { %>
+      <% alerts.success.forEach(msg => { %>
+        <div class="alert alert-success"><%= msg %></div>
+      <% }) %>
+    <% } %>
 
-    <% //if (alerts.error) { %>
-      <% //alerts.error.forEach(msg => { %>
-       <div class="alert alert-danger"><%= //msg %></div>
-      <% //}) %>
-  <% //} %>
+    <% if (alerts.error) { %>
+      <% alerts.error.forEach(msg => { %>
+       <div class="alert alert-danger"><%= msg %></div>
+      <% }) %>
+  <% } %>
 
   <header>
     <nav class="navbar">
       <ul>
         <li><a href="/">Home</a></li>
-        <% //if(!currentUser) { %> 
+        <% if(!currentUser) { %> 
           <li><a href="/auth/signup">Signup</a></li>
           <li><a href="/auth/login">Login</a></li>
-        <% //} else { %> 
+        <% } else { %> 
         <li><a href="/auth/logout">Logout</a></li>
         <li><a href="/profile">Profile</a></li>
-        <% //} %> 
+        <% } %> 
       </ul>
     </nav>
   </header>
@@ -39,10 +39,10 @@
     <section class="contact" id="contact">
         <h2 class="heading">Welcome to your <span>Profile!</span></h2>
             <div class="input-box">
-                <h3>Name <span><%= //name %>!</h3>
-                <h3>Email <span><%= //email %>! </h3>
-                <h3>Phone <span><%= //phone %>! </h3>
+                <h3>Name <span><%= name %>!</h3>
+                <h3>Email <span><%= email %>! </h3>
+                <h3>Phone <span><%= phone %>! </h3>
             </div>
     </section>
 </body>
-</html> -->
+</html>

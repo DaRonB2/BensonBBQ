@@ -1,7 +1,36 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
+body {
+    background: black;
+}
+h1 {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+img {
+    width: 450px;
+    height: 450px;
+    border-radius: 10rem;
+    border: 5px white solid;
+    padding: 5px;
+    margin: 75px;
+
+    
+}
+.img-2 {
+    height: 50%;
+}
 
 
+.text h2 {
+    color: white;
+    display: flex;
+    position: absolute;
+    bottom: 40px;
 
-div {
-    width: 100%;
 }

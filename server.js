@@ -83,6 +83,10 @@ app.get('/status', (req, res) => {
     res.render('status/index', {});
 });
 
+// ------- CHECKOUT ----------
+app.get('/checkout', (req, res) => {
+    res.render('checkout/index', {});
+});
 
 
 

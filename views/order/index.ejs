@@ -40,6 +40,9 @@
                   <li class="nav-item">
                     <a class="nav-link" href="status">Status</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="checkout">Checkout</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -62,7 +65,6 @@
             <%= meat1.name %>
           </button>
         </h2>
-       
         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <strong>Smoked for 12 hours fresh every day. This order comes with 7 juicy, tender, and thick brisjet slices!</strong>
@@ -71,7 +73,8 @@
             <strong class="price">$<%= meat1.price %></strong>
           </div>
           <div class="accordion-body">
-            <button class="checkout">Checkout</button>
+            <button class="checkout" id="button1">Checkout</button>
+            
           </div>
         </div>
       </div>
@@ -220,6 +223,7 @@
         </div>
       </div>
     </div>
+    <script src="/js/order.js"></script>
 </body>
 
 </html>
