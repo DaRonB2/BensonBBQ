@@ -11,6 +11,7 @@ mongoose.connect('mongodb://localhost/BensonBBQ');
 const meat = require('./models/meats'); 
 const side = require('./models/sides');
 const drink = require('./models/drinks');
+const Order = require('./models/order')
 
 // ------------ MIDDLEWARE ------------
 app.use(methodOverride('_method'));
@@ -30,8 +31,22 @@ app.use(express.urlencoded({ extended: true }));
 
 // -------- GET ROUTES -------------
 // -------- HOME ----------
-app.get('/', (req, res) => {
-    res.render('index', {});
+// app.get('/', (req, res) => {
+//     res.render('index', {});
+// });
+
+app.get('/', (req,res) => {
+    axios
+        .get("https://api.unsplash.com/photos/random", {
+            headers: {
+                Authorization:"Client-ID " + process.env.ACCESS_KEY,
+            },
+        })
+        .then((response) => {
+            console.log(response.data.urls.raw);
+
+                res.render("index", {picture: response.data.urls.raw});
+        });
 });
 
 // ------ MENU -----------
@@ -75,6 +90,7 @@ app.get('/order', async (req, res) => {
     const allMeats = await meat.find();
     const allSides = await side.find();
     const allDrinks = await drink.find();
+    // const existingOrder = await Order.findOne();
     res.render('order/index', {allDrinks, allSides, allMeats});
 });
 
@@ -86,12 +102,80 @@ app.get('/status', async (req, res) => {
     res.render('status/index', {allDrinks, allSides, allMeats});
 });
 
-// ------- CHECKOUT ----------
-app.get('/checkout', (req, res) => {
-    res.render('checkout/index', {});
+
+
+app.post('/add-to-cart', async (req, res) => {
+    try {
+        const { name, price } = req.body;
+        const totalPrice = parseFloat(price);
+        
+        let existingOrder = await Order.findOne();
+        
+        
+        if (!existingOrder) {
+            existingOrder = await Order.create({
+                items: [],
+                totalPrice: 0,
+                completed: false,
+            });
+        }
+        
+        existingOrder.items.push({ name, price, quantity: 1 });
+        existingOrder.totalPrice += totalPrice;
+        
+      
+        await existingOrder.save();
+
+        console.log('Existing Order:', existingOrder);
+        res.redirect('/order');
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
+// app.post('/checkout', async (req, res) => {
+//     try {
+//         const { name, price } = req.body;
+//         const totalPrice = parseFloat(price);
+        
+//         let existingOrder = await Order.findOne();
+        
+        
+//         if (!existingOrder) {
+//             existingOrder = await Order.create({
+//                 items: [],
+//                 totalPrice: 0,
+//             });
+//         }
+        
+//         existingOrder.items.push({ name, price, quantity: 1 });
+//         existingOrder.totalPrice += totalPrice;
+        
+      
+//         await existingOrder.save();
 
+//         console.log('Existing Order:', existingOrder);
+//         res.redirect('/status');
+//     } catch (error) {
+//         console.error('Error:', error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
+
+// ------- CHECKOUT ----------
+app.get('/cart', async (req, res) => {
+    let existingOrder = await Order.find();
+    const allMeats = await meat.find();
+    const allSides = await side.find();
+    const allDrinks = await drink.find();
+    res.render('checkout/index', {existingOrder,allDrinks, allSides, allMeats});
+});
+
+Order.collection.countDocuments({} , (err , data)=> {
+    if ( err ) console.log( err.message );
+     console.log ( `There are ${data} orders in this database` );
+ });
 
 
 app.listen(PORT, () => {

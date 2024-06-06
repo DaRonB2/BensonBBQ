@@ -47,6 +47,7 @@ const meatSchema = new mongoose.Schema({
     quantity: Number,
     type: String,
     image: String,
+    desc: String,
 }, { timestamps: true });
 
 // name and create the model

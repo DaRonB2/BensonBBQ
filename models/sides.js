@@ -42,6 +42,7 @@ const sideSchema = new mongoose.Schema({
     scoops: Number,
     meat: Array,
     image: String,
+    desc: String,
 }, { timestamps: true });
 
 // name and create the model

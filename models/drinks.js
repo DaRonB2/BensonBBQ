@@ -48,6 +48,7 @@ const drinkSchema = new mongoose.Schema({
     refills: Boolean,
     type: Array,
     image: String,
+    desc: String,
 }, { timestamps: true });
 
 // name and create the model

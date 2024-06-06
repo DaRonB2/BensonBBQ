@@ -83,8 +83,18 @@ header a {
     color: crimson;
     border: 3px white solid;
     border-radius: 1rem;
-    width: 180px;
+    width: 250px;
     background: black;
+    padding: 2rem;
+}
+
+.carousel .list .item .content .des {
+    color: crimson;
+    border: 3px white solid;
+    border-radius: 1rem;
+    width: 700px;
+    background: black;
+    padding: 2rem;
 }
 
 .carousel .list .item .buttons {
@@ -221,6 +231,8 @@ header a {
 .carousel .list .item:nth-child(1) .content .buttons {
     animation-delay: 1.8s!important;
 }
+
+
 
 /* animation on next click */
 .carousel.next .list .item:nth-child(1) img {

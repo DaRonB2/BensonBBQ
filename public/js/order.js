@@ -1,12 +1,26 @@
-let accordionDom = document.
-
-console.log(accordionDom);
 
 
-const button1 = document.getElementById('button1');
-console.log(button1);
 
 
-button1.addEventListener('click', () => {
-    console.log('button was clicked');
-})
+document.addEventListener('DOMContentLoaded', function () {
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); 
+            const formData = new FormData(form); 
+            const data = Object.fromEntries(formData.entries()); 
+            console.log(data); 
+        });
+    });
+});
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     const checkoutForm = document.querySelector('#checkoutButton');
+//     checkoutForm.forEach(form => {
+//         eventNames.preventDefault();
+//         const checkoutFormData = new FormData(form);
+//         const checkoutData = Object.fromEntries(checkoutFormData.entries());
+//         console.log(checkoutData);
+//     })
+// })
+
