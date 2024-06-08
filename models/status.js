@@ -10,8 +10,7 @@ db.once('open', () => console.log(`Connected to MongoDB at ${db.host}:${db.port}
 db.on('error', (error) => console.log('Database error\n', error));
 
 // create the schema
-const orderSchema = new mongoose.Schema({
-    id: String,
+const statusSchema = new mongoose.Schema({
     items: [
         {
             name: String,
@@ -19,13 +18,13 @@ const orderSchema = new mongoose.Schema({
             quantity: Number,
         }
     ],
-    submitted: Boolean,
     completed: Boolean,
-    totalPrice: Number,
+    totalPrice: String,
+    
 }, { timestamps: true });
 
 // name and create the model
-const Order = mongoose.model('Order', orderSchema);
+const Status = mongoose.model('Status', statusSchema);
 
 // make this model available
-module.exports = Order;
+module.exports = Status;

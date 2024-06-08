@@ -1,4 +1,4 @@
-DOCTYPE html>
+<DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -35,29 +35,53 @@ DOCTYPE html>
                     <a class="nav-link" href="menu" style="color: crimson;">Menu</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="order" style="color: crimson;">Order</a>
+                    <a class="nav-link" " href="order" style="color: crimson;">Order</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="status" style="color: crimson;">Status</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="checkout" style="color: crimson;">Cart</a>
+                    <a class="nav-link active" aria-current="page" href="cart" style="color: crimson;">Cart</a>
                   </li>
                 </ul>
               </div>
             </div>
           </nav>
-    </header>
-    <% let order1 = existingOrder %>
-    <% console.log('------ORDER--------', order1) %>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item"><%= order1%></li>
+        </header>
+        <% existingOrder.forEach(order => { %>
+          <h2 style="background: white; color: crimson; border: 1px white solid;">Order ID: <%= order.id %></h2>
+          <% order.items.forEach((item, index) => { %>
+              <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                      Item: <%= item.name %>
+                      <br> Price: $<%= item.price %>
+                      <br> Quantity: <%= item.quantity %>
+                      
+                      <form action="/cart?_method=PUT" method="POST" id="updateForm-<%= index %>">
+                          <input type="hidden" name="name" value="<%= item.name %>">
+                          <input type="hidden" name="quantity" value="1"> 
+                          <button type="submit" class="btn btn-outline-primary btn-sm">+1</button>
+                      </form>
+                      <form action="/cart/<%=order.id%>?_method=DELETE" method="POST" id="deleteForm-<%= index %>">
+                        <input type="hidden" name="name" value="<%= item.name %>">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Remove From Cart</button>
+                    </form>
+                  </li>
+              </ul>
+          <% }); %>
+          <h2 style="background: white; color: crimson; border: 1px white solid;">Total Price: $<%= order.totalPrice %></h2>
+      <% }); %>
+      
+    
+    <!-- <ul class="list-group list-group-flush">
+        <li class="list-group-item"><%=//order1%></li>
         <li class="list-group-item">A second item</li>
         <li class="list-group-item">A third item</li>
         <li class="list-group-item">A fourth item</li>
         <li class="list-group-item">And a fifth one</li>
-    </ul>
+    </ul> -->
 
     <button><a href="/order">Back to Checkout</a></button>
+    <script src="/js/cart.js"></script>
 
 </body>

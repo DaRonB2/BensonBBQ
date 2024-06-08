@@ -72,7 +72,7 @@
           <div class="accordion-body" style="background: #aaa9ad;">
             <strong style="color: crimson;" class="price">$<%= meat1.price %></strong>
           </div>
-          <form  id="button1" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
+          <form  id="form" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
             <input type="hidden" name="name" value="<%= meat1.name %>"> 
             <input type="hidden" name="price" value="<%= meat1.price %>"><!-- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
@@ -95,7 +95,7 @@
             <strong class="price" style="color: crimson;">$<%= meat2.price %></strong>
           </div>
          
-          <form  id="button2" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
+          <form  id="form" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
             <input type="hidden" name="name" value="<%= meat2.name %>"> 
             <input type="hidden" name="price" value="<%= meat2.price %>"><!-- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
@@ -118,7 +118,7 @@
             <strong class="price" style="color: crimson;">$<%= meat3.price %></strong>
           </div>
           
-          <form  id="button3" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
+          <form  id="form" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
             <input type="hidden" name="name" value="<%= meat3.name %>"> 
             <input type="hidden" name="price" value="<%= meat3.price %>"><!-- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
@@ -142,7 +142,7 @@
             <strong class="price" style="color: crimson;">$<%= side1.price %></strong>
           </div>
           
-          <form  id="button4" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
+          <form  id="form" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
             <input type="hidden" name="name" value="<%= side1.name %>"> 
             <input type="hidden" name="price" value="<%= side1.price %>"><!-- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
@@ -165,7 +165,7 @@
             <strong class="price" style="color: crimson;">$<%= side2.price %></strong>
           </div>
           
-          <form  id="button5" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
+          <form  id="form" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
             <input type="hidden" name="name" value="<%= side2.name %>"> 
             <input type="hidden" name="price" value="<%= side2.price %>"><!-- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
@@ -189,7 +189,7 @@
             <strong class="price" style="color: crimson;">$<%= side3.price %></strong>
           </div>
           
-          <form  id="button6" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
+          <form  id="form" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
             <input type="hidden" name="name" value="<%= side3.name %>"> 
             <input type="hidden" name="price" value="<%= side3.price %>"><!-- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
@@ -213,7 +213,7 @@
             <strong class="price" style="color: crimson;">$<%= drink1.price %></strong>
           </div>
          
-          <form  id="button7" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
+          <form  id="form" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
             <input type="hidden" name="name" value="<%= drink1.name %>"> 
             <input type="hidden" name="price" value="<%= drink1.price %>"><!-- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
@@ -237,7 +237,7 @@
             <strong class="price" style="color: crimson;">$<%= drink2.price %></strong>
           </div>
          
-          <form  id="button8" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
+          <form  id="form" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
             <input type="hidden" name="name" value="<%= drink2.name %>"> 
             <input type="hidden" name="price" value="<%= drink2.price %>"><!-- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
@@ -261,7 +261,7 @@
             <strong class="price" style="color: crimson;">$<%= drink3.price %></strong>
           </div>
           
-          <form  id="button9" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart">
+          <form  id="form" class="accordion-body" style="background: #aaa9ad;" method="POST" action="/add-to-cart" required>
             <input type="hidden" name="name" value="<%= drink3.name %>"> 
             <input type="hidden" name="price" value="<%= drink3.price %>"><!-- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
@@ -269,15 +269,21 @@
             <button type="submit" class="checkout" style="color:crimson;">Add to Cart</button>
           </form>
         </div>
-       <button><a href="/cart">View Your Cart</a></button>
+        <!-- <form action="/pokemon/ability" method="GET">
+          <div class="input-box">
+              <input type="text" placeholder="Search Pokemon by Ability" name="ability" required>
+          </div>
+          <button type="submit" value="Find Cart" class="btn">
+      </form> -->
+      <button><a href="/cart">View Your Cart</a></button>
         <div>
-          <!-- <form  id="checkoutButton" style="background: #aaa9ad;" method="POST" action="/checkout">
-            <input type="hidden" name="items" value="<%= //existingOrder %>"> 
-            <input type="hidden" name="price" value="<%= //drink1.price %>"> Assuming _id is the ID of the item -->
+          <form  id="checkoutButton" style="background: #aaa9ad;" method="POST" action="/checkout" required>
+            <input type="hidden" name="items" value="<%= existingOrder %>"> 
+            <input type="hidden" name="totalPrice" value="<%= //existingOrder.totalPrice %>"><!--- Assuming _id is the ID of the item -->
             <!-- Include other hidden input fields for other item details if needed -->
             <!-- Button to submit the form -->
-            <!-- <button type="submit" class="checkout" style="color:crimson;">Checkout Cart</button>
-          </form> --> 
+            <button type="submit" class="checkout" style="color:crimson;">Checkout Cart</button>
+          </form> 
         </div>
        
 

@@ -90,8 +90,8 @@ app.get('/order', async (req, res) => {
     const allMeats = await meat.find();
     const allSides = await side.find();
     const allDrinks = await drink.find();
-    // const existingOrder = await Order.findOne();
-    res.render('order/index', {allDrinks, allSides, allMeats});
+    const existingOrder = await Order.findOne();
+    res.render('order/index', {existingOrder,allDrinks, allSides, allMeats});
 });
 
 //------- STATUS ----------
@@ -99,83 +99,194 @@ app.get('/status', async (req, res) => {
     const allMeats = await meat.find();
     const allSides = await side.find();
     const allDrinks = await drink.find();
-    res.render('status/index', {allDrinks, allSides, allMeats});
+    const existingOrder = await Order.findOne();
+    res.render('status/index', {existingOrder, allDrinks, allSides, allMeats});
 });
 
 
 
 app.post('/add-to-cart', async (req, res) => {
+    console.log('add to cart post route');
     try {
-        const { name, price } = req.body;
-        const totalPrice = parseFloat(price);
-        
-        let existingOrder = await Order.findOne();
-        
-        
+        console.log('found one');
+        let { name, price } = req.body;
+        let parsedPrice = parseFloat(price);
+        let existingOrder = await Order.findOne(); 
+        let idNum = Math.floor(Math.random() * 300);
+
         if (!existingOrder) {
+            console.log('creating order');
             existingOrder = await Order.create({
+                id: idNum.toString(),
                 items: [],
-                totalPrice: 0,
+                submitted: false,
+                totalPrice: 0, 
                 completed: false,
             });
         }
+
+     
+        existingOrder.items.push({ name, price: parsedPrice, quantity: 1 });
+
         
-        existingOrder.items.push({ name, price, quantity: 1 });
+        existingOrder.totalPrice += parsedPrice;
+        console.log('Existing order items:', existingOrder.items);
+      
+        await existingOrder.save(); 
+
+        console.log('Existing Order:', existingOrder);
+        res.redirect('/order'); 
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+app.post('/checkout', async (req, res) => {
+    try {
+        const { name, totalPrice } = req.body;
+        // const totalPrice = parseFloat(price);
+        
+        let existingOrder = await Order.findOne();
+        let idNum = Math.floor(Math.random() * 300);
+
+        existingOrder.items.push({ name, totalPrice, quantity: 1 });
         existingOrder.totalPrice += totalPrice;
+        existingOrder.submitted = true;
+        let count = 60;
+        const timer = setInterval(function() {
+            count--;
+            console.log(count);
+            if (count === 0) {
+                clearInterval(timer);
+                console.log("Time's up!");
+                existingOrder.completed = true;
+                console.log('------ STATUS ---------', existingOrder)
+            }
+        }, 1000);
         
       
         await existingOrder.save();
 
+        let newOrder = await Order.create({
+            id: idNum.toString(),
+            items: [],
+            submitted: false,
+            totalPrice: 0,
+            completed: false,
+        });
+
+        
+        // Sort documents by timestamp in descending order and limit to 1
+        const latestRecord = await Order.findOne({totalPrice: '0'});
         console.log('Existing Order:', existingOrder);
-        res.redirect('/order');
+        console.log('New Order:', latestRecord)
+        res.redirect('/status');
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
 });
 
-// app.post('/checkout', async (req, res) => {
-//     try {
-//         const { name, price } = req.body;
-//         const totalPrice = parseFloat(price);
-        
-//         let existingOrder = await Order.findOne();
-        
-        
-//         if (!existingOrder) {
-//             existingOrder = await Order.create({
-//                 items: [],
-//                 totalPrice: 0,
-//             });
-//         }
-        
-//         existingOrder.items.push({ name, price, quantity: 1 });
-//         existingOrder.totalPrice += totalPrice;
-        
-      
-//         await existingOrder.save();
-
-//         console.log('Existing Order:', existingOrder);
-//         res.redirect('/status');
-//     } catch (error) {
-//         console.error('Error:', error);
-//         res.status(500).send('Internal Server Error');
-//     }
-// });
-
 // ------- CHECKOUT ----------
 app.get('/cart', async (req, res) => {
     let existingOrder = await Order.find();
+    console.log('Existing Order:---get /cart', existingOrder);
     const allMeats = await meat.find();
     const allSides = await side.find();
     const allDrinks = await drink.find();
+    if(!existingOrder) {
+        res.render('checkout/empty', {});
+    } else {
+    
     res.render('checkout/index', {existingOrder,allDrinks, allSides, allMeats});
+    }
 });
 
 Order.collection.countDocuments({} , (err , data)=> {
     if ( err ) console.log( err.message );
      console.log ( `There are ${data} orders in this database` );
  });
+
+ app.put('/cart', async (req, res) => {
+    console.log('add 1 put route');
+    console.log('----------Update Quantity-------\n', req.body);
+    try {
+        console.log('found one');
+        let { name, quantity } = req.body;
+        let parsedquantity = parseInt(quantity);
+        let existingOrder = await Order.findOne({submitted: false});
+
+        if (existingOrder) {
+            const item = existingOrder.items.find(item => item.name === name)
+            if (item) {
+                item.quantity += parsedquantity;
+                await existingOrder.save();
+                console.log('------Updated Order-----', existingOrder)
+            } else {
+                console.error('Item not found in order')
+            }
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+    //fruits[parseInt(req.params.id)] = req.body;
+    res.redirect('/cart');
+});
+
+
+
+//  app.delete('/cart/:orderId', async (req,res) => {
+    
+//        try{
+//         let { orderId } = req.params;
+//         let { itemId } = req.body;
+//         const updatedOrder = await Order.findOneAndUpdate(
+//             { id: orderId },
+//             { $pull: { items: { _id: itemId } } }, // Removes the item with the matching _id
+//             { new: true } 
+//         );
+
+//         if (!updatedOrder) {
+//             console.error('Order Not Found');
+//             return res.redirect('/cart');
+//         } else {
+//             console.log('-----Item Deleted ----')
+//         }
+//     } catch (error) {
+//         console.error('Error:', error);
+//         res.status(500).send('Internal Server Error');
+//     }
+//     res.redirect('/cart')
+// });
+
+app.delete('/cart/:orderId', async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const { itemId } = req.body;
+        const existingOrder = await Order.findOne({ id: orderId });
+        if (!existingOrder) {
+            console.error('Order Not Found');
+            return res.redirect('/cart');
+        } else {
+          existingOrder.items.pull({ _id: itemId }); // Remove the item with the specified _id
+            await existingOrder.save();
+            console.log('-----Item Deleted ----', itemId);
+            //console.log('Updated Order:', existingOrder);
+            res.redirect('/cart');  
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
 
 
 app.listen(PORT, () => {
