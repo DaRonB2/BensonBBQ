@@ -15,7 +15,7 @@
       <link rel="stylesheet" href="/css/order.css" charset="utf-8" />
   
       <!-- END Style Sheets -->
-      <title>Benson's BBQ Menu</title>
+      <title>Benson's BBQ</title>
   </head>
   
   <body>
@@ -35,7 +35,7 @@
                       <a class="nav-link" href="menu" style="color: crimson;">Menu</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="order" style="color: crimson;">Order</a>
+                      <a class="nav-link" " href="order" style="color: crimson;">Order</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link active" aria-current="page" href="status" style="color: crimson;">Status</a>
@@ -47,37 +47,51 @@
                 </div>
               </div>
             </nav>
-      </header>
-              <% for(let i = 0; i < existingOrder.length; i++) { %>
-                <% let order = existingOrder[i]; %>
-                <% let id = existingOrder[i].id %>
-                <div class="accordion" id="accordionExample">
-                  <div class="accordion-item" >
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="color: crimson;">
-                        <strong>Order Id: <%= id %></strong>
-                      </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                      <div class="accordion-body" style="background: #aaa9ad;" >
-                   <% for(let i = 0; i < order.items.length; i++) { %>
-                     <% let name = order.items[i].name %>
-                     <% console.log(name) %>
-                     <% let price = order.items[i].price %>
-                     <% console.log(price) %>
-                     <% let quantity = order.items[i].quantity %>
-                     <% console.log(quantity) %>
-                     <ul class="list-group list-group-flush">
-                       <li class="list-group-item">Item: <%=name%> <br> Price: $<%= price %> <br> Quantity: <%= quantity %></li>
-                       
-                  <% } %> 
-                 <% console.log('------ORDER--------', order) %>
-                 <h2 style="background: white; color: crimson; border: 1px white solid;">Total Price: $<%= order.totalPrice %></h2>
-                 <h2 style="background: white; color: crimson; border: 1px white solid;">Submitted: $<%= order.submitted %></h2>
-                 <h2 style="background: white; color: crimson; border: 1px white solid;">Completed: $<%= order.completed %></h2>
-            <% } %>
-            </div>
-          </div>
-        </div>
-      </div>
+          </header>
+         <% for (let i = 0; i < existingOrder.length; i++) { %>
+          <% const order = existingOrder[i]; %>
+          <% console.log('---Order---',order) %>
+          <h2 style="background: white; color: crimson; border: 1px white solid;">Order ID: <%= order.id %></h2>
+          <% for(let j = 0; j < order.items.length; j++) { %>
+            <% let item = order.items[j]; %>
+            <% console.log('---Item---',item) %>
+            <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Item: <%= item.name %>
+                        <br> Price: $<%= item.price %>
+                        <br> Quantity: <%= item.quantity %>
+                        
+                        <form action="/status?_method=PUT" method="POST" id="updateForm-<%= index %>">
+                            <input type="hidden" name="name" value="<%= item.name %>">
+                            <input type="hidden" name="quantity" value="1"> 
+                            <input type="hidden" name="price" value="<%= item.price %>">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">+1</button>
+                        </form>
+                        <form action="/status/<%=order.id%>?_method=DELETE" method="POST" id="deleteForm-<%= index %>">
+                          <input type="hidden" name="name" value="<%= item.name %>">
+                          <button type="submit" class="btn btn-outline-primary btn-sm">Remove From Cart</button>
+                      </form>
+                    </li>
+                </ul>
+             <% } %>
+             <h2 style="background: white; color: crimson; border: 1px white solid;">Total Price: $<%= order.totalPrice %></h2>
+           <% } %>
+            
+                
+            
+            
+        
+        
+      
+      <!-- <ul class="list-group list-group-flush">
+          <li class="list-group-item"><%=//order1%></li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">A fourth item</li>
+          <li class="list-group-item">And a fifth one</li>
+      </ul> -->
+  
+      <button><a href="/order">Back to Checkout</a></button>
+      <script src="/js/status.js"></script>
+  
   </body>

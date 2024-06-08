@@ -52,12 +52,13 @@
             <div class="content">
               <div class="author"><%= meat.type %></div>
               <div class="title"><%= meat.name %></div>
-              <div class="topic"><%= meat.price %></div>
+              <div class="topic">$<%= meat.price %></div>
               <div class="des">
                   <%= meat.desc %>
               </div>
               <div class="buttons">
                 <a href="../order" style="background: black; color: crimson; border: 1px white solid; border-radius: 1rem; position: relative; display: flex; justify-content: center; align-items: center;">Ready To Order</a>
+                <a href="../menu" style="background: black; color: crimson; border: 1px white solid; border-radius: 1rem; position: relative; display: flex; justify-content: center; align-items: center;">Back To Menu</a>
               </div>
             </div>
           </div>
@@ -75,7 +76,7 @@
               <%= meat.name %>
             </div>
             <div class="des">
-              <%= meat.price %>
+              $<%= meat.price %>
             </div>
           </div>
         </div>

@@ -60,6 +60,7 @@
                       <form action="/cart?_method=PUT" method="POST" id="updateForm-<%= index %>">
                           <input type="hidden" name="name" value="<%= item.name %>">
                           <input type="hidden" name="quantity" value="1"> 
+                          <input type="hidden" name="price" value="<%= item.price %>">
                           <button type="submit" class="btn btn-outline-primary btn-sm">+1</button>
                       </form>
                       <form action="/cart/<%=order.id%>?_method=DELETE" method="POST" id="deleteForm-<%= index %>">

@@ -53,7 +53,7 @@
             <div class="content">
               <div class="author"><%= side.type %></div>
               <div class="title"><%= side.name %></div>
-              <div class="topic"><%= side.price %></div>
+              <div class="topic">$<%= side.price %></div>
               <div class="des">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut ipsam
                   saepe accusantium soluta quibusdam error. Tempore officia hic
@@ -62,6 +62,7 @@
               </div>
               <div class="buttons">
                 <a href="../order" style="background: black; color: crimson; border: 1px white solid; border-radius: 1rem; position: relative; display: flex; justify-content: center; align-items: center;">Ready To Order</a>
+                <a href="../menu" style="background: black; color: crimson; border: 1px white solid; border-radius: 1rem; position: relative; display: flex; justify-content: center; align-items: center;">Back To Menu</a>
               </div>
             </div>
           </div>
@@ -79,7 +80,7 @@
               <%= side.name %>
             </div>
             <div class="des">
-              <%= side.price %>
+              $<%= side.price %>
             </div>
           </div>
         </div>

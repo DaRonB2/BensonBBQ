@@ -39,7 +39,7 @@ app.get('/', (req,res) => {
     axios
         .get("https://api.unsplash.com/photos/random", {
             headers: {
-                Authorization:"Client-ID " + process.env.ACCESS_KEY,
+                Authorization:"Client-ID " + process.env.UNSPLASH_ACCESS_KEY,
             },
         })
         .then((response) => {
@@ -96,14 +96,23 @@ app.get('/order', async (req, res) => {
 
 //------- STATUS ----------
 app.get('/status', async (req, res) => {
+    const existingOrder = await Order.findOne();
+    console.log('Existing Order:---get /status', existingOrder);
     const allMeats = await meat.find();
     const allSides = await side.find();
     const allDrinks = await drink.find();
-    const existingOrder = await Order.findOne();
+    
     res.render('status/index', {existingOrder, allDrinks, allSides, allMeats});
 });
 
-
+app.get('/cart', async (req, res) => {
+    let existingOrder = await Order.find();
+    console.log('Existing Order:---get /cart', existingOrder);
+    const allMeats = await meat.find();
+    const allSides = await side.find();
+    const allDrinks = await drink.find();
+    res.render('checkout/index', {existingOrder,allDrinks, allSides, allMeats});
+});
 
 app.post('/add-to-cart', async (req, res) => {
     console.log('add to cart post route');
@@ -188,19 +197,7 @@ app.post('/checkout', async (req, res) => {
 });
 
 // ------- CHECKOUT ----------
-app.get('/cart', async (req, res) => {
-    let existingOrder = await Order.find();
-    console.log('Existing Order:---get /cart', existingOrder);
-    const allMeats = await meat.find();
-    const allSides = await side.find();
-    const allDrinks = await drink.find();
-    if(!existingOrder) {
-        res.render('checkout/empty', {});
-    } else {
-    
-    res.render('checkout/index', {existingOrder,allDrinks, allSides, allMeats});
-    }
-});
+
 
 Order.collection.countDocuments({} , (err , data)=> {
     if ( err ) console.log( err.message );
@@ -214,12 +211,15 @@ Order.collection.countDocuments({} , (err , data)=> {
         console.log('found one');
         let { name, quantity } = req.body;
         let parsedquantity = parseInt(quantity);
+        //let parsedPrice = parseFloat(price);
         let existingOrder = await Order.findOne({submitted: false});
 
         if (existingOrder) {
             const item = existingOrder.items.find(item => item.name === name)
+            //const totalPrice = existingOrder.totalPrice
             if (item) {
                 item.quantity += parsedquantity;
+                //totalPrice += parsedPrice;
                 await existingOrder.save();
                 console.log('------Updated Order-----', existingOrder)
             } else {
@@ -230,9 +230,36 @@ Order.collection.countDocuments({} , (err , data)=> {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
-
-    //fruits[parseInt(req.params.id)] = req.body;
     res.redirect('/cart');
+});
+
+app.put('/status', async (req, res) => {
+    console.log('add 1 put route');
+    console.log('----------Update Quantity-------\n', req.body);
+    try {
+        console.log('found one');
+        let { name, quantity } = req.body;
+        let parsedquantity = parseInt(quantity);
+        //let parsedPrice = parseFloat(price);
+        let existingOrder = await Order.findOne({submitted: false});
+
+        if (existingOrder) {
+            const item = existingOrder.items.find(item => item.name === name)
+            //const totalPrice = existingOrder.totalPrice
+            if (item) {
+                item.quantity += parsedquantity;
+                //totalPrice += parsedPrice;
+                await existingOrder.save();
+                console.log('------Updated Order-----', existingOrder)
+            } else {
+                console.error('Item not found in order')
+            }
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    res.redirect('/status');
 });
 
 
