@@ -5,9 +5,18 @@ const methodOverride = require('method-override');
 const axios = require('axios'); // access data from an api
 const dotenv = require('dotenv'); // remember: this is managing environment variables
 dotenv.config();
+const flash = require('connect-flash');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('./config/passport-config');
+const isLoggedIn = require('./middleware/isLoggedIn');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/BensonBBQ');
+const SECRET_SESSION = process.env.SECRET_SESSION;
+
+
 // ------------ DATA -----------------
+const { User } = require('./models');
 const meat = require('./models/meats'); 
 const side = require('./models/sides');
 const drink = require('./models/drinks');
@@ -19,6 +28,33 @@ app.set('view engine', 'ejs');
 app.use('/', express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: SECRET_SESSION,
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(flash());
+
+// initial passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.use((req, res, next) => {
+    res.locals.alerts = req.flash();
+    res.locals.currentUser = req.user;
+    next(); // going to said route
+});
+
+// import auth routes
+app.use('/auth', require('./controllers/auth'));
+
+// --- AUTHENTICATED ROUTE: go to user profile page --- 
+app.get('/profile', isLoggedIn, (req, res) => {
+    const { name, email, phone } = req.user;
+    res.render('profile', { name, email, phone });
+});
+
 
 // --------- DATA ----------
 // ------------- DATA ---------
