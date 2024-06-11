@@ -43,19 +43,31 @@
                     <li class="nav-item">
                       <a class="nav-link" href="cart" style="color: crimson;">Cart</a>
                     </li>
+                    <% if(!currentUser) { %> 
+                      <li class="nav-item">
+                          <a class="nav-link" style="color: crimson;" href="/auth/signup">Signup</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" style="color: crimson;" href="/auth/login">Login</a>
+                      </li>
+                    <% } else { %> 
+                    <li class="nav-item">
+                      <a class="nav-link" style="color: crimson;" href="/auth/logout">Logout</a>
+                  </li>
+                    <li class="nav-item">
+                      <a class="nav-link" style="color: crimson;" href="/profile">Profile</a>
+                  </li>
+                    <% } %> 
                   </ul>
                 </div>
               </div>
             </nav>
           </header>
-         <% for (let i = 0; i < existingOrder.length; i++) { %>
-          <% const order = existingOrder[i]; %>
-          <% console.log('---Order---',order) %>
-          <h2 style="background: white; color: crimson; border: 1px white solid;">Order ID: <%= order.id %></h2>
-          <% for(let j = 0; j < order.items.length; j++) { %>
-            <% let item = order.items[j]; %>
-            <% console.log('---Item---',item) %>
-            <ul class="list-group list-group-flush">
+          <% console.log('Existing Order:---get /status', existingOrder); %>
+          <% existingOrder.forEach(order => { %>
+            <h2 style="background: white; color: crimson; border: 1px white solid;">Order ID: <%= order.id %></h2>
+            <% order.items.forEach((item, index) => { %>
+                <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         Item: <%= item.name %>
                         <br> Price: $<%= item.price %>
@@ -65,33 +77,21 @@
                             <input type="hidden" name="name" value="<%= item.name %>">
                             <input type="hidden" name="quantity" value="1"> 
                             <input type="hidden" name="price" value="<%= item.price %>">
-                            <button type="submit" class="btn btn-outline-primary btn-sm">+1</button>
+                            <button type="submit" class="btn btn-outline-primary btn-sm">Its Calling My Name Add Another!</button>
                         </form>
-                        <form action="/status/<%=order.id%>?_method=DELETE" method="POST" id="deleteForm-<%= index %>">
-                          <input type="hidden" name="name" value="<%= item.name %>">
-                          <button type="submit" class="btn btn-outline-primary btn-sm">Remove From Cart</button>
+                        <form action="/cart/<%=order.id%>?_method=DELETE" method="POST" id="deleteForm-<%= index %>">
+                          <input type="hidden" name="itemId" value="<%= item._id %>">
+                          <button type="submit" class="btn btn-outline-primary btn-sm">Sorry I Dont Want This Anymore!</button>
                       </form>
                     </li>
                 </ul>
-             <% } %>
-             <h2 style="background: white; color: crimson; border: 1px white solid;">Total Price: $<%= order.totalPrice %></h2>
-           <% } %>
-            
-                
-            
-            
-        
-        
-      
-      <!-- <ul class="list-group list-group-flush">
-          <li class="list-group-item"><%=//order1%></li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-      </ul> -->
+            <% }); %>
+            <h2 style="background: white; color: crimson; border: 1px white solid;">Total Price: $<%= order.totalPrice %></h2>
+            <h2 style="background: white; color: crimson; border: 1px white solid;">Submitted: <%= order.submitted %></h2>
+            <h2 style="background: white; color: crimson; border: 1px white solid;">Completed: <%= order.completed %></h2>
+        <% }); %>
   
-      <button><a href="/order">Back to Checkout</a></button>
+      <button><a href="/">Back to Home</a></button>
       <script src="/js/status.js"></script>
   
   </body>

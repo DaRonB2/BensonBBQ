@@ -1,4 +1,10 @@
 const User = require('./user');
+const meat = require('./meats');
+const side = require('./sides');
+const drink = require('./drinks');
+const Order = require('./order');
+const Status = require('./status');
+require('dotenv').config()
 
 const mongoose = require('mongoose');
 const uri = process.env.MONGO_URI;
@@ -16,6 +22,6 @@ run().catch(console.dir);
 
 // export models
 module.exports = { 
-    User,
+    User, meat, side, Order, Status, drink,
 
 }

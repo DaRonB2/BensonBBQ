@@ -1,13 +1,10 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/BensonBBQ');
+// mongoose.connect('mongodb://localhost/BensonBBQ');
 
-const db = mongoose.connection;
+// const db = mongoose.connection;
 
-// const {meats} = ('meats');
-// console.log(meats);
-
-db.once('open', () => console.log(`Connected to MongoDB at ${db.host}:${db.port}`));
-db.on('error', (error) => console.log('Database error\n', error));
+// db.once('open', () => console.log(`Connected to MongoDB at ${db.host}:${db.port}`));
+// db.on('error', (error) => console.log('Database error\n', error));
 
 // create the schema
 const statusSchema = new mongoose.Schema({

@@ -11,16 +11,19 @@ const session = require('express-session');
 const passport = require('./config/passport-config');
 const isLoggedIn = require('./middleware/isLoggedIn');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/BensonBBQ');
+// mongoose.connect('mongodb://localhost/BensonBBQ');
 const SECRET_SESSION = process.env.SECRET_SESSION;
+// const ejsLint = require('ejs-lint');
+// ejsLint(text, options)
 
 
 // ------------ DATA -----------------
 const { User } = require('./models');
-const meat = require('./models/meats'); 
-const side = require('./models/sides');
-const drink = require('./models/drinks');
-const Order = require('./models/order')
+const { meat } = require('./models');
+const { side } = require('./models');
+const { drink } = require('./models');
+const { Order } = require('./models');
+const { Status } = require('./models');
 
 // ------------ MIDDLEWARE ------------
 app.use(methodOverride('_method'));
@@ -35,7 +38,7 @@ app.use(session({
 }));
 app.use(flash());
 
-// initial passport
+//initial passport
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -46,14 +49,7 @@ app.use((req, res, next) => {
     next(); // going to said route
 });
 
-// import auth routes
-app.use('/auth', require('./controllers/auth'));
 
-// --- AUTHENTICATED ROUTE: go to user profile page --- 
-app.get('/profile', isLoggedIn, (req, res) => {
-    const { name, email, phone } = req.user;
-    res.render('profile', { name, email, phone });
-});
 
 
 // --------- DATA ----------
@@ -84,6 +80,17 @@ app.get('/', (req,res) => {
                 res.render("index", {picture: response.data.urls.raw});
         });
 });
+
+
+// import auth routes
+app.use('/auth', require('./controllers/auth'));
+
+// --- AUTHENTICATED ROUTE: go to user profile page --- 
+app.get('/profile', isLoggedIn, (req, res) => {
+    const { name, email, phone } = req.user;
+    res.render('profile', { name, email, phone });
+});
+
 
 // ------ MENU -----------
 app.get('/menu', async (req, res) => {
@@ -127,13 +134,13 @@ app.get('/order', async (req, res) => {
     const allSides = await side.find();
     const allDrinks = await drink.find();
     const existingOrder = await Order.findOne();
+    console.log('Existing Order:---get /order', existingOrder);
     res.render('order/index', {existingOrder,allDrinks, allSides, allMeats});
 });
 
 //------- STATUS ----------
 app.get('/status', async (req, res) => {
-    const existingOrder = await Order.findOne();
-    console.log('Existing Order:---get /status', existingOrder);
+    const existingOrder = await Order.find();
     const allMeats = await meat.find();
     const allSides = await side.find();
     const allDrinks = await drink.find();
@@ -197,6 +204,7 @@ app.post('/checkout', async (req, res) => {
         existingOrder.items.push({ name, totalPrice, quantity: 1 });
         existingOrder.totalPrice += totalPrice;
         existingOrder.submitted = true;
+        res.redirect('/status');
         let count = 60;
         const timer = setInterval(function() {
             count--;
@@ -225,7 +233,7 @@ app.post('/checkout', async (req, res) => {
         const latestRecord = await Order.findOne({totalPrice: '0'});
         console.log('Existing Order:', existingOrder);
         console.log('New Order:', latestRecord)
-        res.redirect('/status');
+        
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
@@ -245,17 +253,21 @@ Order.collection.countDocuments({} , (err , data)=> {
     console.log('----------Update Quantity-------\n', req.body);
     try {
         console.log('found one');
-        let { name, quantity } = req.body;
+        let { name, quantity, price  } = req.body;
         let parsedquantity = parseInt(quantity);
-        //let parsedPrice = parseFloat(price);
+        let parsedPrice = parseFloat(price);
         let existingOrder = await Order.findOne({submitted: false});
 
         if (existingOrder) {
             const item = existingOrder.items.find(item => item.name === name)
-            //const totalPrice = existingOrder.totalPrice
+            let totalPrice = existingOrder.totalPrice
             if (item) {
                 item.quantity += parsedquantity;
-                //totalPrice += parsedPrice;
+                totalPrice += parsedPrice;
+                existingOrder.totalPrice = 0;
+                existingOrder.items.forEach(item => {
+                    existingOrder.totalPrice += item.price * item.quantity
+                })
                 await existingOrder.save();
                 console.log('------Updated Order-----', existingOrder)
             } else {
@@ -274,17 +286,21 @@ app.put('/status', async (req, res) => {
     console.log('----------Update Quantity-------\n', req.body);
     try {
         console.log('found one');
-        let { name, quantity } = req.body;
+        let { name, quantity, price  } = req.body;
         let parsedquantity = parseInt(quantity);
-        //let parsedPrice = parseFloat(price);
+        let parsedPrice = parseFloat(price);
         let existingOrder = await Order.findOne({submitted: false});
 
         if (existingOrder) {
             const item = existingOrder.items.find(item => item.name === name)
-            //const totalPrice = existingOrder.totalPrice
+            let totalPrice = existingOrder.totalPrice
             if (item) {
                 item.quantity += parsedquantity;
-                //totalPrice += parsedPrice;
+                totalPrice += parsedPrice;
+                existingOrder.totalPrice = 0;
+                existingOrder.items.forEach(item => {
+                    existingOrder.totalPrice += item.price * item.quantity
+                })
                 await existingOrder.save();
                 console.log('------Updated Order-----', existingOrder)
             } else {
@@ -300,50 +316,66 @@ app.put('/status', async (req, res) => {
 
 
 
-//  app.delete('/cart/:orderId', async (req,res) => {
+ app.delete('/cart/:orderId', async (req,res) => {
     
-//        try{
-//         let { orderId } = req.params;
-//         let { itemId } = req.body;
-//         const updatedOrder = await Order.findOneAndUpdate(
-//             { id: orderId },
-//             { $pull: { items: { _id: itemId } } }, // Removes the item with the matching _id
-//             { new: true } 
-//         );
-
-//         if (!updatedOrder) {
-//             console.error('Order Not Found');
-//             return res.redirect('/cart');
-//         } else {
-//             console.log('-----Item Deleted ----')
-//         }
-//     } catch (error) {
-//         console.error('Error:', error);
-//         res.status(500).send('Internal Server Error');
-//     }
-//     res.redirect('/cart')
-// });
-
-app.delete('/cart/:orderId', async (req, res) => {
-    try {
-        const { orderId } = req.params;
-        const { itemId } = req.body;
-        const existingOrder = await Order.findOne({ id: orderId });
-        if (!existingOrder) {
+       try{
+        let { orderId } = req.params;
+        let { itemId } = req.body;
+        console.log('Order ID:', orderId);
+        console.log('Item ID:', itemId);
+        const updatedOrder = await Order.findOneAndUpdate(
+            { id: orderId },
+            { $pull: { items: { _id: itemId } } }, // Removes the item with the matching _id
+            { new: true }
+        );
+        updatedOrder.totalPrice = 0
+        updatedOrder.items.forEach(item => {
+            updatedOrder.totalPrice += item.price * item.quantity
+        })
+        console.log('------delete/ cart',updatedOrder.totalPrice)
+        await updatedOrder.save();
+        if (!updatedOrder) {
             console.error('Order Not Found');
             return res.redirect('/cart');
         } else {
-          existingOrder.items.pull({ _id: itemId }); // Remove the item with the specified _id
-            await existingOrder.save();
-            console.log('-----Item Deleted ----', itemId);
-            //console.log('Updated Order:', existingOrder);
-            res.redirect('/cart');  
+            console.log('-----Item Deleted ----')
         }
-        
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
+    res.redirect('/cart')
+});
+
+app.delete('/status/:orderId', async (req,res) => {
+    
+    try{
+     let { orderId } = req.params;
+     let { itemId } = req.body;
+     console.log('Order ID:', orderId);
+     console.log('Item ID:', itemId);
+     const updatedOrder = await Order.findOneAndUpdate(
+         { id: orderId },
+         { $pull: { items: { _id: itemId } } }, // Removes the item with the matching _id
+         { new: true }
+     );
+     updatedOrder.totalPrice = 0
+     updatedOrder.items.forEach(item => {
+         updatedOrder.totalPrice += item.price * item.quantity
+     })
+     console.log('------delete/ status',updatedOrder.totalPrice)
+     await updatedOrder.save();
+     if (!updatedOrder) {
+         console.error('Order Not Found');
+         return res.redirect('/status');
+     } else {
+         console.log('-----Item Deleted ----')
+     }
+ } catch (error) {
+     console.error('Error:', error);
+     res.status(500).send('Internal Server Error');
+ }
+ res.redirect('/status')
 });
 
 
@@ -352,6 +384,8 @@ app.delete('/cart/:orderId', async (req, res) => {
 
 
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log('🎧 Server is running on PORT 🎧', PORT);
 });
+
+module.exports = server;

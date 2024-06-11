@@ -1,0 +1,172 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   text-decoration: none;
+   border: none;
+   outline: none;
+   scroll-behavior: smooth;
+   font-family: "Poppins", sans-serif;
+}
+
+:root {
+   --bg-color: #8338ec;
+   --second-bg-color: #323946;
+   --text-color: #fff;
+   --main-color: #f1683a;
+}
+
+html {
+   font-size: 62.5%;
+   overflow-x: hidden;
+}
+
+body {
+   background: var(--bg-color);
+   color: var(--text-color);
+}
+
+section {
+   min-height: 100vh;
+   padding: 10rem 9% 2rem;
+}
+
+.header {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   padding: 32px 9%;
+   background: var(--bg-color);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   z-index: 100;
+}
+
+.header.sticky {
+   border-bottom: 0.1rem solid rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+   font-size: 40px;
+   color: var(--text-color);
+   font-weight: 600;
+   cursor: default;
+}
+
+/* .navbar a {
+   font-size: 14px;
+   color: var(--text-color);
+   margin-left: 64px;
+   transition: 0.3s ease;
+}
+
+.navbar a:hover,
+.navbar a.active {
+   color: var(--main-color);
+}
+
+#menu-icon {
+   font-size: 3.6rem;
+   color: var(--text-color);
+   display: none;
+} */
+
+.home {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.home-img img {
+   width: 35vw;
+   animation: floatImage 4s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+   0% {
+       transform: translateY(0);
+   }
+   50% {
+       transform: translateY(-2.4rem);
+   }
+   100% {
+       transform: translateY(0);
+   }
+}
+
+.home-content h3 {
+   font-size: 3.2rem;
+   font-weight: 700;
+}
+
+.home-content h3:nth-of-type(2) {
+   margin-bottom: 2rem;
+}
+
+
+.contact h2 {
+   margin-bottom: 3rem;
+}
+
+.contact form {
+   max-width: 70rem;
+   margin: 1rem auto;
+   text-align: center;
+   margin-bottom: 3rem;
+}
+
+.contact form .input-box {
+   /* display: flex; */
+   justify-content: space-between;
+   flex-wrap: wrap;
+}
+
+.contact form .input-box input,
+
+.contact form textarea {
+   width: 100%;
+   padding: 1.5rem;
+   font-size: 1.6rem;
+   color: var(--text-color);
+   background: var(--second-bg-color);
+   border-radius: 0.8rem;
+   margin: 0.7rem 0;
+}
+
+.contact form .input-box .checkbox {
+   display: flex;
+   align-items: center;
+   width: 100%;
+}
+
+.contact form .input-box label {
+   width: 80%;
+   padding: 1.5rem;
+   font-size: 1.6rem;
+   color: var(--text-color);
+   background: var(--second-bg-color);
+   border-radius: 0.8rem;
+   margin: 0.7rem 0;
+}
+
+.contact form .input-box input {
+   width: 49%;
+}
+
+.contact form textarea {
+   resize: none;
+}
+
+.contact form .btn {
+   margin-top: 2rem;
+   cursor: pointer;
+}
+
+
+h1 {
+  color: chartreuse;
+}

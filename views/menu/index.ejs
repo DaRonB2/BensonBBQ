@@ -54,6 +54,21 @@
             <li class="nav-item">
               <a class="nav-link" href="cart" style="color: crimson;">Cart</a>
             </li>
+            <% if(!currentUser) { %> 
+              <li class="nav-item">
+                  <a class="nav-link" style="color: crimson;" href="/auth/signup">Signup</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="color: crimson;" href="/auth/login">Login</a>
+              </li>
+            <% } else { %> 
+            <li class="nav-item">
+              <a class="nav-link" style="color: crimson;" href="/auth/logout">Logout</a>
+          </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: crimson;" href="/profile">Profile</a>
+          </li>
+            <% } %> 
           </ul>
         </div>
       </div>

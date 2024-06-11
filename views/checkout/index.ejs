@@ -43,6 +43,21 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="cart" style="color: crimson;">Cart</a>
                   </li>
+                  <% if(!currentUser) { %> 
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: crimson;" href="/auth/signup">Signup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: crimson;" href="/auth/login">Login</a>
+                    </li>
+                  <% } else { %> 
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: crimson;" href="/auth/logout">Logout</a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="color: crimson;" href="/profile">Profile</a>
+                </li>
+                  <% } %> 
                 </ul>
               </div>
             </div>
@@ -64,7 +79,7 @@
                           <button type="submit" class="btn btn-outline-primary btn-sm">+1</button>
                       </form>
                       <form action="/cart/<%=order.id%>?_method=DELETE" method="POST" id="deleteForm-<%= index %>">
-                        <input type="hidden" name="name" value="<%= item.name %>">
+                        <input type="hidden" name="itemId" value="<%= item._id %>">
                         <button type="submit" class="btn btn-outline-primary btn-sm">Remove From Cart</button>
                     </form>
                   </li>
@@ -72,15 +87,6 @@
           <% }); %>
           <h2 style="background: white; color: crimson; border: 1px white solid;">Total Price: $<%= order.totalPrice %></h2>
       <% }); %>
-      
-    
-    <!-- <ul class="list-group list-group-flush">
-        <li class="list-group-item"><%=//order1%></li>
-        <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li>
-        <li class="list-group-item">A fourth item</li>
-        <li class="list-group-item">And a fifth one</li>
-    </ul> -->
 
     <button><a href="/order">Back to Checkout</a></button>
     <script src="/js/cart.js"></script>
