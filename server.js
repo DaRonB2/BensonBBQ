@@ -379,8 +379,100 @@ app.delete('/status/:orderId', async (req,res) => {
 });
 
 
-
-
+// meat.create({
+//     "name": "Brisket",
+//     "price": 33,
+//     "quantity": 10,
+//     "type": "Beef",
+//     "image": "https://i.imgur.com/NQaILMZ.jpeg",
+//     "desc": "Smoked for 12 hours made fresh everyday, seasoned with house-made bbq rub that is sweet, savory, and has a kick at the end of it. You get 10 slices of juicy cut brisket with your choice of our homemade tangy bbq sauce on the brisket or on the side."
+//   });
+//   meat.create({
+//     "name": "Ribs",
+//     "price": 27,
+//     "quantity": 7,
+//     "type": "Pork",
+//     "image": "https://i.imgur.com/AVjxVmw.jpeg",
+//     "desc": "Smoked for 8 hours made fresh everyday, seasoned with house-made bbq rub that is sweet, savory, and has a kick at the end of it. You get 8 bone-cuts  of juicy tender ribs with your choice of our homemade tangy bbq sauce on the ribs or on the side."
+//   });
+//   meat.create({
+//     "name": "Tri-Tip",
+//     "price": 19,
+//     "quantity": 10,
+//     "type": "Beef",
+//     "image": "https://i.imgur.com/oQJTeoN.jpeg",
+//     "desc": "Smoked for 2 hours then seared over a charcoal grill, made fresh everyday, seasoned with house-made bbq rub that is sweet, savory, and has a kick at the end of it. You get 1 full Tri-Tip in 10 tender slices with your choice of our homemade tangy bbq sauce on the brisket or on the side."
+//   });
+//   side.create({
+//     "name": "Mac N Cheese",
+//     "price": 10,
+//     "scoops": 3,
+//     "meat": [
+//       "Bacon",
+//       "None"
+//     ],
+//     "image": "https://i.imgur.com/JETkBXi.jpeg",
+//     "desc": "4 cheese blend mac n cheese that is baked to perfection, made fresh everyday, seasoned with just salt and letting the cheese do the talking for itself. You get 3 healthy scoops of the creamy cheesy goodness with the choice of smoked bacon or no protein!"
+//   });
+//   side.create({
+//     "name": "Candy Yams",
+//     "price": 8,
+//     "scoops": 2,
+//     "meat": [
+//       "None"
+//     ],
+//     "image": "https://i.imgur.com/RdvOfTb.jpeg",
+//     "desc": "Brown sugar coated sweet potatoes turn into the perfect candy yams. Boiled until able to slide a fork straight through then baked until the sugars crystalize. You get 2 healthy scoops of rich candy goodness!"
+//   });
+//   side.create({
+//     "name": "Collard Greens",
+//     "price": 7,
+//     "scoops": 2,
+//     "meat": [
+//       "Bacon"
+//     ],
+//     "image": "https://i.imgur.com/nfifprh.jpeg",
+//     "desc": "3 leaf blend cooked inside chicken broth with a mix of garlic, salt, and red pepper flakes. You get 2 healthy scoops of the perfect smoky collard greens with the choice of smoked bacon or no protein"
+//   });
+//   drink.create({
+//     "name": "Soda",
+//     "price": 3,
+//     "refills": false,
+//     "type": [
+//       "Sprite",
+//       "Fanta Orange",
+//       "Root Beer",
+//       "Coca-Cola"
+//     ],
+//     "image": "https://i.imgur.com/TU6JK9B.jpeg",
+//     "desc": "All cups are Large here, no small or medium sizes. So, come enjoy a large soda with us"
+//   });
+//   drink.create({
+//     "name": "Juice",
+//     "price": 2,
+//     "refills": false,
+//     "type": [
+//       "Lemonade",
+//       "Apple",
+//       "Orange",
+//       "Cranberry"
+//     ],
+//     "image": "https://i.imgur.com/Fj8ypjF.png",
+//     "desc": "All cups are Large here, no small or medium sizes. So, come enjoy a large juice with us"
+//   });
+//   drink.create({
+//     "name": "Water",
+//     "price": 2,
+//     "refills": true,
+//     "type": [
+//       "Bottled",
+//       "Cup",
+//       "Sparkling"
+//     ],
+//     "image": "https://i.imgur.com/Uu86sFj.jpg",
+//     "desc": "With 3 different types of water, you have options to pick through. So, come enjoy some bottled, cup, or sparkling water with us."
+//   });
+//Order.collection.drop();
 
 
 
